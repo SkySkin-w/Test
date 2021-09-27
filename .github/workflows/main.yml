@@ -14,8 +14,8 @@ jobs:
       uses: actions/checkout@v2
     - name: testFunc
       run: |
-        echo "REPORT_DATE="$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")"" >> $GITHUB_ENV
-        echo ${{env.REPORT_DATE}}
+        echo "SECONDS_FROM_LAST__COMMIT="$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")"" >> $GITHUB_ENV
+      if: ${{env.SECONDS_FROM_LAST__COMMIT >= 300}}
     - name: echo some
       run: |
         echo "hello world"
