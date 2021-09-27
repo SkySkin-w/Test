@@ -13,7 +13,10 @@ jobs:
     - name: Checkout codes
       uses: actions/checkout@v2
     - name: testFunc
-      run: echo $(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
+      run: |
+        echo "REPORT_DATE=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+        echo (${{env.REPORT_DATE}})
+        echo ${{env.REPORT_DATE}}
     - name: echo some
       run: |
         echo "hello world"
