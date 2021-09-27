@@ -19,8 +19,8 @@ jobs:
       run: |
         now_seconds=$(date +%s)
         gitCommitIimeGithub=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
-        echo 'gitCommitIimeGitHUB='${gitCommitIimeGithub}        
-        gitHUBCommit_seconds=$(date --date="${gitCommitIimeGitHUB}" +%s)   
+        echo 'gitCommitIimeGithub='${gitCommitIimeGithub}        
+        gitHUBCommit_seconds=$(date --date="${gitCommitIimeGithub}" +%s)   
         echo 'gitHUBCommit_seconds='${gitHUBCommit_seconds}
         secondsFromLastCommit_GITHUB="$((now_seconds-gitHUBCommit_seconds))"
         echo 'secondsFromLastCommit_GITHUB='${secondsFromLastCommit_GITHUB}        
@@ -29,8 +29,8 @@ jobs:
         git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
         cd ./Test/
         gitCommitIimeGitee=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
-        echo 'gitCommitIimeGitEE='${gitCommitIimeGitee}
-        gitEECommit_seconds=$(date --date="${gitCommitIimeGitEE}" +%s)
+        echo 'gitCommitIimeGitee='${gitCommitIimeGitee}
+        gitEECommit_seconds=$(date --date="${gitCommitIimeGitee}" +%s)
         echo 'gitEECommit_seconds='${gitEECommit_seconds}
         secondsFromLastCommit_GITEE="$((now_seconds-gitEECommit_seconds))"
         echo 'secondsFromLastCommit_GITEE='${secondsFromLastCommit_GITEE}        
