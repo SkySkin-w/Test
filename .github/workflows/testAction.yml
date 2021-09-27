@@ -17,11 +17,13 @@ jobs:
 
     - name: Compare GitCommitIimeGithub And GitCommitIimeGitee
       run: |
-        ls
+        now_seconds=$(date +%s)
         gitCommitIimeGithub=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
         echo 'gitCommitIimeGitHUB='${gitCommitIimeGithub}        
         gitHUBCommit_seconds=$(date --date="${gitCommitIimeGitHUB}" +%s)   
         echo 'gitHUBCommit_seconds='${gitHUBCommit_seconds}
+        secondsFromLastCommit_GITHUB="$((now_seconds-gitHUBCommit_seconds))"
+        echo 'secondsFromLastCommit_GITHUB='${secondsFromLastCommit_GITHUB}        
         mkdir tempCloneDir
         cd ./tempCloneDir/
         git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
@@ -30,6 +32,8 @@ jobs:
         echo 'gitCommitIimeGitEE='${gitCommitIimeGitee}
         gitEECommit_seconds=$(date --date="${gitCommitIimeGitEE}" +%s)
         echo 'gitEECommit_seconds='${gitEECommit_seconds}
+        secondsFromLastCommit_GITEE="$((now_seconds-gitEECommit_seconds))"
+        echo 'secondsFromLastCommit_GITEE='${secondsFromLastCommit_GITEE}        
         GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
         CompareTimeResult="${GITHUB_GITEE}"
         echo 'CompareTimeResult=${CompareTimeResult}'
