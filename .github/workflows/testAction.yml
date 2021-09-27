@@ -26,6 +26,5 @@ jobs:
         gitCommitIimeGitee=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
         echo 'gitCommitIimeGithub='${gitCommitIimeGithub}
         echo 'gitCommitIimeGitee='${gitCommitIimeGitee}
-        if [ "$((gitCommitIimeGithub==gitCommitIimeGitee))" -eq "1" ]; then
-            echo "AUTO_PAKEGE=1 >> $GITHUB_ENV
-        fi
+        CompareTimeResult=$((gitCommitIimeGithub==gitCommitIimeGitee))
+        echo 'CompareTimeResult='${CompareTimeResult}
