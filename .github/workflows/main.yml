@@ -18,12 +18,40 @@ jobs:
         sss="$((now_seconds-gitCommit_seconds))"
         echo "SECONDS_FROM_LAST__COMMIT="$((now_seconds-gitCommit_seconds))"" >> $GITHUB_ENV
         echo ${sss}
-    - name: echo some
-      if: ${{env.SECONDS_FROM_LAST__COMMIT >= 300}}
+    - name: echo some 10
+      if: ${{env.SECONDS_FROM_LAST__COMMIT == 10}}
       run: |
-        echo "hello world"
-    - name: echo some2
+        echo "hello world 10"
+    - name: echo some 11
+      if: ${{env.SECONDS_FROM_LAST__COMMIT == 11}}
       run: |
-        echo "hello world2"
-      
+        echo "hello world 11"
+    - name: echo some 12
+      if: ${{env.SECONDS_FROM_LAST__COMMIT <= 12}}
+      run: |
+        echo "hello world 12"
+    - name: echo some 13
+      if: ${{env.SECONDS_FROM_LAST__COMMIT == 13}}
+      run: |
+        echo "hello world 13"
+    - name: echo some 14
+      if: ${{env.SECONDS_FROM_LAST__COMMIT <= 14}}
+      run: |
+        echo "hello world 14"   
+    - name: echo some 15
+      if: ${{env.SECONDS_FROM_LAST__COMMIT = 15}}
+      run: |
+        echo "hello world 15"                                
+    - name: echo some 16
+      if: ${{env.SECONDS_FROM_LAST__COMMIT = 16}}
+      run: |
+        echo "hello world 16"
+    - name: echo some 17
+      if: ${{env.SECONDS_FROM_LAST__COMMIT = 17}}
+      run: |
+        echo "hello world 17"   
+    - name: echo some 18
+      if: ${{env.SECONDS_FROM_LAST__COMMIT = 18}}
+      run: |
+        echo "hello world 18"                               
       
