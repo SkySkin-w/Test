@@ -24,8 +24,10 @@ jobs:
         git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
         cd ./Test
         gitCommitIimeGitee=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
-        echo 'gitCommitIimeGithub='${gitCommitIimeGithub}
-        echo 'gitCommitIimeGitee='${gitCommitIimeGitee}
-        CompareTimeResult=$((gitCommitIimeGithub==gitCommitIimeGitee))
-        echo "$((gitCommitIimeGithub==gitCommitIimeGitee))"
+        echo 'gitCommitIimeGitHUB='${gitCommitIimeGithub}
+        echo 'gitCommitIimeGitEE='${gitCommitIimeGitee}
+        gitEECommit_seconds=$(date --date="${gitCommitIimeGitEE}" +%s)
+        gitHUBCommit_seconds=$(date --date="${gitCommitIimeGitHUB}" +%s)
+        GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
+        CompareTimeResult=${GITHUB_GITEE}
         echo 'CompareTimeResult='${CompareTimeResult}
