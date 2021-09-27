@@ -14,7 +14,7 @@ jobs:
       run: |
         echo "SECONDS_FROM_LAST__COMMIT="$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")"" >> $GITHUB_ENV
     - name: echo some
-      if: ${{env.SECONDS_FROM_LAST__COMMIT >= 300}}
+      if: ${{env.SECONDS_FROM_LAST__COMMIT <= 300}}
       run: |
         echo "hello world"
       
