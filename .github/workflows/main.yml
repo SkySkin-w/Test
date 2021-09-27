@@ -16,7 +16,7 @@ jobs:
         gitCommit_seconds=$(date --date="${gitCommitIime}" +%s)
         now_seconds=$(date +%s)
         echo "SECONDS_FROM_LAST__COMMIT="$((now_seconds-gitCommit_seconds))"" >> $GITHUB_ENV
-        echo ${{evn.SECONDS_FROM_LAST__COMMIT}} "2561dsasdas"
+        echo (${{env.SECONDS_FROM_LAST__COMMIT}}) "2561dsasdas"
     - name: echo some
       if: ${{env.SECONDS_FROM_LAST__COMMIT >= 300}}
       run: |
