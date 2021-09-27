@@ -41,8 +41,4 @@ jobs:
       
         #得到 (github提交时间 -  gitee提交时间)
         GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
-        echo 'GITHUB_GITEE=${GITHUB_GITEE}'
-
-        
-
-
+        echo 'GITHUB_GITEE='${GITHUB_GITEE}
