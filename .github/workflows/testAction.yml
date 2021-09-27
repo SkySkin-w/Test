@@ -47,7 +47,8 @@ jobs:
         #得到 (github提交时间 -  gitee提交时间)
         GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
         echo '得到 (github提交时间 -  gitee提交时间)[GITHUB_GITEE]='${GITHUB_GITEE}
-        echo "GITHUB_GITEE_TIME="${GITHUB_GITEE} >> $GITHUB_ENV
+        #echo "GITHUB_GITEE_TIME="${GITHUB_GITEE} >> $GITHUB_ENV
+        echo "GITHUB_GITEE_TIME="$((gitHUBCommit_seconds-gitEECommit_seconds))"" >> $GITHUB_ENV
       #判断，如果小于0，则gitee版本要高，需要进行吧gitee的代码hexo进行编译，然后提交，然后再通过第三方库Yikun/gitee-mirror-action@v0.01，
       #把gitee代码仓库同步到github
   blog-cicd:
