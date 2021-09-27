@@ -28,6 +28,8 @@ jobs:
         echo 'gitCommitIimeGitEE='${gitCommitIimeGitee}
         gitEECommit_seconds=$(date --date="${gitCommitIimeGitEE}" +%s)
         gitHUBCommit_seconds=$(date --date="${gitCommitIimeGitHUB}" +%s)
+        echo 'gitEECommit_seconds='${gitEECommit_seconds}
+        echo 'gitHUBCommit_seconds='${gitHUBCommit_seconds}
         GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
-        CompareTimeResult=${GITHUB_GITEE}
-        echo 'CompareTimeResult='${CompareTimeResult}
+        CompareTimeResult="${GITHUB_GITEE}"
+        echo 'CompareTimeResult=${CompareTimeResult}'
