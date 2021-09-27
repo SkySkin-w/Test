@@ -6,11 +6,11 @@ on:
     types: [opened, reopened]
 
 #env:
-#  TZ: Asia/Shanghai 
+#  TZ: Asia/Shanghai
 
 jobs:
-  blog-cicd:
-    name: Hexo blog build & deploy
+  time-judge:
+    name: judge gitee and github version
     runs-on: ubuntu-latest # 使用最新的 Ubuntu 系统作为编译部署的环境
 
     steps:
@@ -19,28 +19,57 @@ jobs:
 
     - name: Compare GitCommitIimeGithub And GitCommitIimeGitee
       run: |
+        pwd
         #得到github项目对应的最后提交时间
         gitCommitIimeGithub=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
-        echo 'gitCommitIimeGithub='${gitCommitIimeGithub}       
+        echo '得到github项目对应的最后提交时间[gitCommitIimeGithub]='${gitCommitIimeGithub}       
 
         #得到github项目对应的最后提交时间秒数
         gitHUBCommit_seconds=$(date --date="${gitCommitIimeGithub}" +%s)   
-        echo 'gitHUBCommit_seconds='${gitHUBCommit_seconds}
+        echo '得到github项目对应的最后提交时间秒数[gitHUBCommit_seconds]='${gitHUBCommit_seconds}
 
         #创建临时文件拉取gitee
+        echo '创建临时文件拉取gitee'
         mkdir tempCloneDir
         cd ./tempCloneDir/
+        pwd
         git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
         cd ./Test/
 
         #得到gitee项目对应的最后提交时间
         gitCommitIimeGitee=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
-        echo 'gitCommitIimeGitee='${gitCommitIimeGitee}
+        echo '得到gitee项目对应的最后提交时间[gitCommitIimeGitee]='${gitCommitIimeGitee}
 
         #得到gitee项目对应的最后提交时间秒数
         gitEECommit_seconds=$(date --date="${gitCommitIimeGitee}" +%s)
-        echo 'gitEECommit_seconds='${gitEECommit_seconds}
+        echo '得到gitee项目对应的最后提交时间秒数[gitEECommit_seconds]='${gitEECommit_seconds}
       
         #得到 (github提交时间 -  gitee提交时间)
         GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
-        echo 'GITHUB_GITEE='${GITHUB_GITEE}
+        echo '得到 (github提交时间 -  gitee提交时间)[GITHUB_GITEE]='${GITHUB_GITEE}
+        echo "GITHUB_GITEE_TIME="${GITHUB_GITEE} >> $GITHUB_ENV
+      #判断，如果小于0，则gitee版本要高，需要进行吧gitee的代码hexo进行编译，然后提交，然后再通过第三方库Yikun/gitee-mirror-action@v0.01，
+      #把gitee代码仓库同步到github
+  blog-cicd:
+    if: ${{env.GITHUB_GITEE_TIME < 0}}
+    name: Hexo blog build & deploy & push
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 系统作为编译部署的环境
+
+    steps:
+    - name: Checkout gitee codes
+      run: |
+        /usr/bin/git version
+
+    - name: Checkout gitee codes
+      uses: actions/checkout@v2
+
+    - name: create temp dir
+      run: |
+        #创建临时文件拉取gitee
+        echo '创建临时文件拉取gitee'
+        mkdir tempCloneDir
+        cd ./tempCloneDir/
+        pwd
+        git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
+        cd ./Test/
+        pwd
