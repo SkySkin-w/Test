@@ -15,7 +15,7 @@ jobs:
     - name: Checkout codes
       uses: actions/checkout@v2
 
-    - name: Compare GitCommitIimeGithub And gitCommitIimeGitee
+    - name: Compare GitCommitIimeGithub And GitCommitIimeGitee
       run: |
         ls
         gitCommitIimeGithub=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
@@ -27,4 +27,5 @@ jobs:
         echo 'gitCommitIimeGithub='${gitCommitIimeGithub}
         echo 'gitCommitIimeGitee='${gitCommitIimeGitee}
         CompareTimeResult=$((gitCommitIimeGithub==gitCommitIimeGitee))
+        echo "$((gitCommitIimeGithub==gitCommitIimeGitee))"
         echo 'CompareTimeResult='${CompareTimeResult}
