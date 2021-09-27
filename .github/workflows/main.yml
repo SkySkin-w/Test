@@ -13,14 +13,8 @@ jobs:
     - name: Checkout codes
       uses: actions/checkout@v2
     - name: testFunc
-      run: |
-        gitCommitIime=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
-        gitCommit_seconds=$(date --date="${gitCommitIime}" +%s)
-        now_seconds=$(date +%s)
-        echo "SECONDS_FROM_LAST__COMMIT="$((now_seconds-gitCommit_seconds))"" >> $GITHUB_ENV
-        echo ${env.SECONDS_FROM_LAST__COMMIT}
-      if: ${{env.SECONDS_FROM_LAST__COMMIT >= 300}}
-    - name: echo some'
+      run: echo $(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
+    - name: echo some
       run: |
         echo "hello world"
       
