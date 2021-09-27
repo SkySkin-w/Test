@@ -19,7 +19,7 @@ jobs:
         #echo ${env.SECONDS_FROM_LAST__COMMIT}
         echo ${ssss}
     - name: echo some
-      #if: ${{env.SECONDS_FROM_LAST__COMMIT <= 300}}
+      if: ${{env.SECONDS_FROM_LAST__COMMIT >= 300}}
       run: |
         echo "hello world"
       
