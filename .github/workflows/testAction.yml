@@ -15,13 +15,13 @@ jobs:
     - name: Checkout codes
       uses: actions/checkout@v2
 
-    - name: Get SecondsFromLastCommit
+    - name: Compare GitCommitIimeGithub And gitCommitIimeGitee
       run: |
         ls
         gitCommitIimeGithub=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
         mkdir tempCloneDir
         cd ./tempCloneDir/
-        git clone -b myblog https://github.com/SkySkin-w/Test.git
+        git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
         cd ./Test
         gitCommitIimeGitee=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
         echo 'gitCommitIimeGithub='${gitCommitIimeGithub}
