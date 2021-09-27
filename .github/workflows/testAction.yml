@@ -1,9 +1,7 @@
 name: Blog CI/CD
 
 # 触发条件：在 push 到 myblog 分支后触发
-on:
-  issues:
-    types: [opened, reopened]
+on: push
 
 #env:
 #  TZ: Asia/Shanghai
@@ -47,30 +45,11 @@ jobs:
         #得到 (github提交时间 -  gitee提交时间)
         GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
         echo '得到 (github提交时间 -  gitee提交时间)[GITHUB_GITEE]='${GITHUB_GITEE}
-        #echo "GITHUB_GITEE_TIME="${GITHUB_GITEE} >> $GITHUB_ENV
-        echo "GITHUB_GITEE_TIME="$((gitHUBCommit_seconds-gitEECommit_seconds))"" >> $GITHUB_ENV
+        echo "GITHUB_GITEE_TIME="${GITHUB_GITEE} >> $GITHUB_ENV
       #判断，如果小于0，则gitee版本要高，需要进行吧gitee的代码hexo进行编译，然后提交，然后再通过第三方库Yikun/gitee-mirror-action@v0.01，
       #把gitee代码仓库同步到github
-  blog-cicd:
-    if: ${{env.GITHUB_GITEE_TIME < 0}}
-    name: Hexo blog build & deploy & push
-    runs-on: ubuntu-latest # 使用最新的 Ubuntu 系统作为编译部署的环境
-
-    steps:
-    - name: Checkout gitee codes
+    - name: Install hexo dependencies
+      if: ${{env.GITHUB_GITEE_TIME < 0}}
+      # 下载 hexo-cli 脚手架及相关安装包
       run: |
-        /usr/bin/git version
-
-    - name: Checkout gitee codes
-      uses: actions/checkout@v2
-
-    - name: create temp dir
-      run: |
-        #创建临时文件拉取gitee
-        echo '创建临时文件拉取gitee'
-        mkdir tempCloneDir
-        cd ./tempCloneDir/
-        pwd
-        git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
-        cd ./Test/
         pwd
