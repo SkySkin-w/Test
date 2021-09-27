@@ -39,19 +39,19 @@ jobs:
       run: |
         echo "hello world 14"   
     - name: echo some 15
-      if: ${{env.SECONDS_FROM_LAST__COMMIT = 15}}
+      if: ${{env.SECONDS_FROM_LAST__COMMIT == 15}}
       run: |
         echo "hello world 15"                                
     - name: echo some 16
-      if: ${{env.SECONDS_FROM_LAST__COMMIT = 16}}
+      if: ${{env.SECONDS_FROM_LAST__COMMIT == 16}}
       run: |
         echo "hello world 16"
     - name: echo some 17
-      if: ${{env.SECONDS_FROM_LAST__COMMIT = 17}}
+      if: ${{env.SECONDS_FROM_LAST__COMMIT == 17}}
       run: |
         echo "hello world 17"   
     - name: echo some 18
-      if: ${{env.SECONDS_FROM_LAST__COMMIT = 18}}
+      if: ${{env.SECONDS_FROM_LAST__COMMIT == 18}}
       run: |
         echo "hello world 18"                               
       
