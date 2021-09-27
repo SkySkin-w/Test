@@ -17,23 +17,32 @@ jobs:
 
     - name: Compare GitCommitIimeGithub And GitCommitIimeGitee
       run: |
-        now_seconds=$(date +%s)
+        #得到github项目对应的最后提交时间
         gitCommitIimeGithub=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
-        echo 'gitCommitIimeGithub='${gitCommitIimeGithub}        
+        echo 'gitCommitIimeGithub='${gitCommitIimeGithub}       
+
+        #得到github项目对应的最后提交时间秒数
         gitHUBCommit_seconds=$(date --date="${gitCommitIimeGithub}" +%s)   
         echo 'gitHUBCommit_seconds='${gitHUBCommit_seconds}
-        secondsFromLastCommit_GITHUB="$((now_seconds-gitHUBCommit_seconds))"
-        echo 'secondsFromLastCommit_GITHUB='${secondsFromLastCommit_GITHUB}        
+
+        #创建临时文件拉取gitee
         mkdir tempCloneDir
         cd ./tempCloneDir/
         git clone  https://gitee.com/skyskin-w/Test.git #gitee仓库地址
         cd ./Test/
+
+        #得到gitee项目对应的最后提交时间
         gitCommitIimeGitee=$(date --date="$(git show --pretty=format:"%ci" | head -1)" "+%Y-%m-%d %H:%M:%S")
         echo 'gitCommitIimeGitee='${gitCommitIimeGitee}
+
+        #得到gitee项目对应的最后提交时间秒数
         gitEECommit_seconds=$(date --date="${gitCommitIimeGitee}" +%s)
         echo 'gitEECommit_seconds='${gitEECommit_seconds}
-        secondsFromLastCommit_GITEE="$((now_seconds-gitEECommit_seconds))"
-        echo 'secondsFromLastCommit_GITEE='${secondsFromLastCommit_GITEE}        
+      
+        #得到 (github提交时间 -  gitee提交时间)
         GITHUB_GITEE="$((gitHUBCommit_seconds-gitEECommit_seconds))"
-        CompareTimeResult="${GITHUB_GITEE}"
-        echo 'CompareTimeResult=${CompareTimeResult}'
+        echo 'GITHUB_GITEE=${GITHUB_GITEE}'
+
+        
+
+
