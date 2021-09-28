@@ -1,0 +1,42 @@
+name:  github/gitee synchronization tool
+
+# 触发条件：在 push 到 myblog 分支后触发
+#on:
+#  issues:
+#    types: [opened, reopened]
+# 手动触发
+#on:
+#  workflow_dispatch:
+on:
+  watch:
+    types: started
+#env:
+#  TZ: Asia/Shanghai
+
+jobs:
+  time-judge:
+    name: Syn [gitee-Test-tool.yml] to [github-tool-rep-tool.yml]
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 系统作为编译部署的环境
+    steps:
+    - name: Syn yml file
+      env: 
+        # Github 仓库
+        GITHUB_REPO: github.com/SkySkin-w/tool-rep
+        # Coding 仓库
+        #CODING_REPO: e.coding.net/yifanzheng/blogs.git
+        # Gitee 仓库
+        #GITEE_REPO: gitee.com/skyskin-w/skyskin-w.gitee.io    
+      run: |
+        #clone gitee和github需要同步的
+        git clone  https://gitee.com/skyskin-w/Test.git
+        git clone https://github.com/SkySkin-w/tool-rep.git
+
+        cp -f ./Test/.github/workflows/tool.yml  ./tool-rep/.github/workflows/
+        
+        cd ./tool-rep
+        git config user.name "zeyue"
+        git config user.email "735600779@qq.com"
+        git add .
+        git commit -m "Blog syn tool yml file at $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+        git push --force --quiet "https://${{ secrets.ACCESS_TOKEN }}@$GITHUB_REPO" master:master
