@@ -27,11 +27,9 @@ jobs:
         #clone gitee和github需要同步的
         pwd
         git clone  https://gitee.com/skyskin-w/Test.git
-
-        git
         
         git clone https://github.com/SkySkin-w/tool-rep.git
-
+        ls -a ./
         cp -f ./Test/.github/workflows/tool.yml  ./tool-rep/.github/workflows/
         
         cat ./tool-rep/.github/workflows/tool.yml
